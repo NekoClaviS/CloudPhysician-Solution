@@ -8,7 +8,7 @@ Extraction of essential information from the CCTV footage of an ICU monitor in a
 
 ## Methodology
 
-We have solved our problem by breaking it down into multiple smaller subproblems. Our initial goal is to get a straight and rectified image of the monitor that has all the vitals oriented along the axes. This would help in the detection, recognition of the numbers and digitizing of the graph. After that, a method to classify the vitals data given on the screen to different classes, namely, HR, SBP, DBP, SpO2, RR, MAP and HR Graph. Once we have gotten the data correctly classified, we now have to recognize the data and output it followed by plotting of the detected graph. We have also gone ahead and detected whether the ICU monitor has low battery or needs charging, by using the fact that the light on the monitor glows red or yellow when the charge is low. 
+We have solved our problem by breaking it down into multiple smaller subproblems. Our initial goal is to get a straight and rectified image of the monitor that has all the vitals oriented along the axes, in place of the generally tilted image that we have. This would help in the detection, recognition of the numbers and digitizing of the graph. After that, a method to classify the vitals data given on the screen to different classes, namely, HR, SBP, DBP, SpO2, RR, MAP and HR Graph. Once we have gotten the data correctly classified, we now have to recognize the data and output it followed by digitization of the graph detected. We have also gone ahead and detected whether the ICU monitor has low battery or needs charging, by using the fact that the light on the monitor glows red or yellow when the charge is low. 
 
 ## Abstract
 
@@ -314,7 +314,7 @@ As an improvement for the One YOLO for all pipeline, we decided to add 2 YOLO mo
 
 As all the other pipelines we tried are based on some localization or template matching factor, we decided to develop a robust pipeline based on the neighborhood of the numbers.
 
-In this pipeline, we used OCR on the whole image to detect all the text and number bounding boxes. We used the paddle OCR model zoo for number and text recognition. 
+In this pipeline, we used OCR on the whole image to detect all the text and number bounding boxes. This resulted in good performance as it led to better mapping of the numbers obtained to the vitals we had to find, using information from the surrounding text and numbers. We used the paddle OCR model zoo for number and text recognition. 
 
 Some of the models we tried were
 
@@ -387,7 +387,7 @@ FCE and SAR turned out to be the best ones for us and we included both of them i
 
 After this we sorted the bounding boxes based on the area. As all the vitals are shown in a big font size for easy readability by the nurses, the biggest bounding boxes correspond to numeric data. The label of the data is always mentioned on the top of the bounding box, maybe on the top right or top left. We search for the label above it such that the distance of that box lies in the range of 1.5 times the diagonal length of the numeric bounding box. As the image might be blurry, for every numeric bounding box, we tried including all the different synonyms of the same label. For example: HR might be read as pulse or PR amongst others.   After finding the label, we map it to the numeric result received. 
 
-This pipeline has a very good accuracy compared to other pipelines. However it takes a lot of time to perform this computation on CPU. In our case, it was taking around 2 minutes per image.
+This pipeline has a very good accuracy compared to other pipelines. However it takes a lot of time to perform this computation on CPU. In our case, it was taking around 2 minutes per image, which is higher compared to other pipelines. 
 
 This pipeline will be attached in the final ZIP.
 
@@ -395,7 +395,7 @@ This pipeline will be attached in the final ZIP.
 
 We have 3 pipelines:-
 
-1. Main Pipeline - This is our grid pipeline and our main submission. Follow the comments in the notebook to run the code
+1. Main Pipeline - This is our grid pipeline and our main submission. Follow the comments in the notebook to run the code. The final cell can be run to obtain the results.
 2. The Robust Pipeline - This is the pipeline based on neighborhood matching. Follow the comments in the notebook
 3. Fallback Pipeline - This is the pipeline with 2 YOLO models combined. One on eroded images and another on normal image. Follow the comments in the notebook
 
@@ -411,3 +411,4 @@ We have 3 pipelines:-
 - GANs can be used to improve the image quality before detecting.
 - We can use fourier transform to decide the pipeline into which the images will be passed on.
 - We can deploy a better model on an EDGE device so that we can deploy it on CCTV footage.
+- We can have better models which would work for different,new types of monitors as well.
