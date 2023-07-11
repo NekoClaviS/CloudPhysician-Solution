@@ -408,7 +408,7 @@ We have 3 pipelines:-
 # Improvements
 
 - We can improve the inference time by using better or smaller models
-- GANs can be used to improve the image quality before detecting.
-- We can use fourier transform to decide the pipeline into which the images will be passed on.
+- GANs can be used to improve the image quality before detection.
+- We can use Fourier Transform based methods to estimate blurring in the image and decide the pipeline into which the images will be passed on.
 - We can deploy a better model on an EDGE device so that we can deploy it on CCTV footage.
-- We can have better models which would work for different,new types of monitors as well.
+- We can have better models which would work for different, new types of monitors as well.
